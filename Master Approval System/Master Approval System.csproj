@@ -198,7 +198,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Administrator.cs" />
+    <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ProfileUpdateRequest.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\SalaryMasterRequest.cs" />
+    <Compile Include="Models\SalaryProcessRequest.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
