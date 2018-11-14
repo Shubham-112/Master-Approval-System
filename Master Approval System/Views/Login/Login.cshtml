@@ -1,0 +1,64 @@
+﻿@model Master_Approval_System.ViewModels.AccountsLoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+<div class="row">
+    <div class="container">
+        <div class="col-sm-6">
+            <h3>Employee Login</h3>
+            @using (Html.BeginForm("EmployeeLogin", "Login"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.Company)
+                    @Html.TextBoxFor(m => m.Employee.Company, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Employee.Company)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.Email)
+                    @Html.TextBoxFor(m => m.Employee.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Employee.Email)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Employee.Password)
+                    @Html.PasswordFor(m => m.Employee.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Employee.Password)
+                </div>
+
+                <button type="submit" class="btn btn-primary">Employee Login</button>
+
+            }
+        </div>
+        <div class="col-sm-6">
+            <h3>Administrator Login</h3>
+            @using (Html.BeginForm("AdminLogin", "Login"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Administrator.Company)
+                    @Html.TextBoxFor(m => m.Administrator.Company, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Administrator.Company)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Administrator.Email)
+                    @Html.TextBoxFor(m => m.Administrator.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Administrator.Email)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Administrator.Password)
+                    @Html.PasswordFor(m => m.Administrator.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Administrator.Password)
+                </div>
+
+                <button type="submit" class="btn btn-primary">Administrator Login</button>
+
+            }
+        </div>
+    </div>
+</div>

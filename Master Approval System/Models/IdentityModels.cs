@@ -20,6 +20,14 @@ namespace Master_Approval_System.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<SalaryMasterRequest> SalaryMasterRequests { get; set; }
+        public DbSet<SalaryProcessRequest> SalaryProcessRequests { get; set; }
+        public DbSet<ProfileUpdateRequest> ProfileUpdateRequests { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

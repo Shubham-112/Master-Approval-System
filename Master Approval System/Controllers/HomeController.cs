@@ -26,12 +26,5 @@ namespace Master_Approval_System.Controllers
 
             return View();
         }
-
-        public ActionResult Login()
-        {
-            ViewBag.Message = "Login Page.";
-
-            return View();
-        }
     }
 }
