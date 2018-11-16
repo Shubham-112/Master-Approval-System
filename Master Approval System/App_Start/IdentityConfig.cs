@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
+using Master_Approval_System.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Master_Approval_System.Models;
+
 
 namespace Master_Approval_System
 {
@@ -91,6 +94,7 @@ namespace Master_Approval_System
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
+        private ApplicationDbContext _context = new ApplicationDbContext();
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
@@ -99,6 +103,135 @@ namespace Master_Approval_System
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
+        }
+
+        public static string HashPassword(string password)
+        {
+            byte[] salt;
+            byte[] buffer2;
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, 0x10, 0x3e8))
+            {
+                salt = bytes.Salt;
+                buffer2 = bytes.GetBytes(0x20);
+            }
+            byte[] dst = new byte[0x31];
+            Buffer.BlockCopy(salt, 0, dst, 1, 0x10);
+            Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
+            return Convert.ToBase64String(dst);
+        }
+
+        public async Task<SignInStatus> PasswordSignInAsync(string userEmail, string password, string company, bool isPersistent, bool shouldLockout)
+        {
+            SignInStatus signInStatus = SignInStatus.Success;
+
+            if (this.UserManager != null)
+            {
+                Task<ApplicationUser> userAwaiter = this.UserManager.FindByEmailAsync(userEmail);
+                var passCheck = HashPassword(password);
+                ApplicationUser tUser = await userAwaiter;
+                if (tUser != null)
+                {
+                    var company_db = _context.Companies.SingleOrDefault(c => tUser.CompanyId == c.Id);
+                    Task<bool> cultureAwaiter1 = this.UserManager.IsLockedOutAsync(tUser.Id);
+                    if (!await cultureAwaiter1)
+                    {
+                        Task<bool> cultureAwaiter2 = this.UserManager.CheckPasswordAsync(tUser, passCheck);
+                        if (!await cultureAwaiter2)
+                        {
+                            
+                            if (company.Equals(company_db.Name))
+                            {
+                                signInStatus = SignInStatus.Success;
+                                await base.PasswordSignInAsync(userEmail, password, isPersistent, shouldLockout: false);
+                            }
+                            else
+                            {
+                                signInStatus = SignInStatus.Failure;
+                            }
+                        }
+                        else
+                        {
+                            if (shouldLockout)
+                            {
+                                Task<IdentityResult> cultureAwaiter3 = this.UserManager.AccessFailedAsync(tUser.Id);
+                                await cultureAwaiter3;
+                                Task<bool> cultureAwaiter4 = this.UserManager.IsLockedOutAsync(tUser.Id);
+                                if (await cultureAwaiter4)
+                                {
+                                    signInStatus = SignInStatus.LockedOut;
+                                    return signInStatus;
+                                }
+                            }
+                            signInStatus = SignInStatus.Failure;
+                        }
+                    }
+                    else
+                    {
+                        signInStatus = SignInStatus.LockedOut;
+                    }
+                }
+                else
+                {
+                    signInStatus = SignInStatus.Failure;
+                }
+            }
+            else
+            {
+                signInStatus = SignInStatus.Failure;
+            }
+            return signInStatus;
+        }
+
+        public override async Task<SignInStatus> PasswordSignInAsync(string userEmail, string password, bool isPersistent, bool shouldLockout)
+        {
+            SignInStatus signInStatus = SignInStatus.Success;
+            if (this.UserManager != null)
+            {
+                /// changed to use email address instead of username
+                Task<ApplicationUser> userAwaiter = this.UserManager.FindByEmailAsync(userEmail);
+
+                ApplicationUser tUser = await userAwaiter;
+                if (tUser != null)
+                {
+                    Task<bool> cultureAwaiter1 = this.UserManager.IsLockedOutAsync(tUser.Id);
+                    if (!await cultureAwaiter1)
+                    {
+                        Task<bool> cultureAwaiter2 = this.UserManager.CheckPasswordAsync(tUser, password);
+                        if (!await cultureAwaiter2)
+                        {
+                            if (shouldLockout)
+                            {
+                                Task<IdentityResult> cultureAwaiter3 = this.UserManager.AccessFailedAsync(tUser.Id);
+                                await cultureAwaiter3;
+                                Task<bool> cultureAwaiter4 = this.UserManager.IsLockedOutAsync(tUser.Id);
+                                if (await cultureAwaiter4)
+                                {
+                                    signInStatus = SignInStatus.LockedOut;
+                                    return signInStatus;
+                                }
+                            }
+                            signInStatus = SignInStatus.Failure;
+                        }
+                    }
+                    else
+                    {
+                        signInStatus = SignInStatus.LockedOut;
+                    }
+                }
+                else
+                {
+                    signInStatus = SignInStatus.Failure;
+                }
+            }
+            else
+            {
+                signInStatus = SignInStatus.Failure;
+            }
+            return signInStatus;
         }
 
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)

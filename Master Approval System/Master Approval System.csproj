@@ -196,7 +196,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -208,6 +207,10 @@
     <Compile Include="Migrations\201811142122560_administrator.cs" />
     <Compile Include="Migrations\201811142122560_administrator.Designer.cs">
       <DependentUpon>201811142122560_administrator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811161931240_changesToAspNetUsers.cs" />
+    <Compile Include="Migrations\201811161931240_changesToAspNetUsers.Designer.cs">
+      <DependentUpon>201811161931240_changesToAspNetUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -267,7 +270,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
@@ -309,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811142122560_administrator.resx">
       <DependentUpon>201811142122560_administrator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811161931240_changesToAspNetUsers.resx">
+      <DependentUpon>201811161931240_changesToAspNetUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

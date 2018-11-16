@@ -49,6 +49,10 @@ namespace Master_Approval_System.Models
     public class LoginViewModel
     {
         [Required]
+        [Display(Name = "Company")]
+        public string Company { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
@@ -64,6 +68,11 @@ namespace Master_Approval_System.Models
 
     public class RegisterViewModel
     {
+
+        [Required]
+        [Display(Name = "Company")]
+        public string Company { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

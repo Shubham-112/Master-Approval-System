@@ -19,9 +19,11 @@ namespace Master_Approval_System.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -77,7 +79,7 @@ namespace Master_Approval_System.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.Company, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,9 +153,10 @@ namespace Master_Approval_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            var company = _context.Companies.SingleOrDefault(c => model.Company.Equals(c.Name));
+            if (ModelState.IsValid && company != null)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email , CompanyId = company.Id};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -169,6 +172,8 @@ namespace Master_Approval_System.Controllers
                 }
                 AddErrors(result);
             }
+
+            ModelState.AddModelError("RegisterViewModel.Company", "Invalid Company Name");
 
             // If we got this far, something failed, redisplay form
             return View(model);
