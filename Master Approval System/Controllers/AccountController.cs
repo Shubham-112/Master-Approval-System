@@ -487,6 +487,16 @@ namespace Master_Approval_System.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+
+
+
+        //Custom methods
+
+
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
         #endregion
     }
 }

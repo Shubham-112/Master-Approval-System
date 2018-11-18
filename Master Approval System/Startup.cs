@@ -9,6 +9,7 @@ namespace Master_Approval_System
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            createRoles();
         }
     }
 }

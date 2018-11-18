@@ -212,6 +212,10 @@
     <Compile Include="Migrations\201811161931240_changesToAspNetUsers.Designer.cs">
       <DependentUpon>201811161931240_changesToAspNetUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811172329511_populateUsersWithAdminUser.cs" />
+    <Compile Include="Migrations\201811172329511_populateUsersWithAdminUser.Designer.cs">
+      <DependentUpon>201811172329511_populateUsersWithAdminUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Administrator.cs" />
@@ -288,6 +292,8 @@
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Account\Dashboard.cshtml" />
+    <Content Include="Views\Test\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -314,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811161931240_changesToAspNetUsers.resx">
       <DependentUpon>201811161931240_changesToAspNetUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811172329511_populateUsersWithAdminUser.resx">
+      <DependentUpon>201811172329511_populateUsersWithAdminUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
