@@ -123,7 +123,8 @@ namespace Master_Approval_System
             Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
             return Convert.ToBase64String(dst);
         }
-
+	
+	//overloaded passwordSignInAsync
         public async Task<SignInStatus> PasswordSignInAsync(string userEmail, string password, string company, bool isPersistent, bool shouldLockout)
         {
             SignInStatus signInStatus = SignInStatus.Success;
@@ -186,6 +187,7 @@ namespace Master_Approval_System
             return signInStatus;
         }
 
+	//overrided passwordSignInAsync
         public override async Task<SignInStatus> PasswordSignInAsync(string userEmail, string password, bool isPersistent, bool shouldLockout)
         {
             SignInStatus signInStatus = SignInStatus.Success;
