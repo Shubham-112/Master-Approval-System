@@ -1,0 +1,35 @@
+﻿@model Master_Approval_System.ViewModels.DashboardMessageViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Dashboard</h2>
+
+@if(!string.IsNullOrEmpty(Model.Message))
+{
+    if (Model.State.Equals("normal"))
+     {
+         <div class="alert alert-info">
+             <strong>Info!</strong> @Model.Message
+         </div>
+    }
+     else
+     {
+         <div class="alert alert-warning">
+             <strong>Info!</strong> @Model.Message
+         </div>
+     }
+
+}
+
+<div class="container" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-sm-4">
+            @Html.ActionLink("Add Employee", "addEmployee", "Employee", null, new { @class = "add" })
+        </div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>

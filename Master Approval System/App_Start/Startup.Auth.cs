@@ -97,7 +97,7 @@ namespace Master_Approval_System
                 //Roles.AddUserToRole(user.Id, "Administrator");
 
                 var user = new ApplicationUser();
-                user.UserName = "Administrator";
+                user.UserName = "admin@test.com";
                 user.Email = "admin@test.com";
 
                 string userPWD = "admin@123";
