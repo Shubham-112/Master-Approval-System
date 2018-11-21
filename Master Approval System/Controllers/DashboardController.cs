@@ -18,6 +18,14 @@ namespace Master_Approval_System.Controllers
             return View(model);
         }
 
+        public ActionResult redirectView(String message, String status)
+        {
+            DashboardMessageViewModel msg = new DashboardMessageViewModel();
+            msg.Message = message;
+            msg.State = status;
+            return View("Index", msg);
+        }
+
 
     }
 }

@@ -29,7 +29,7 @@ namespace Master_Approval_System.Controllers
         public ActionResult addEmployee(AddEmployeeViewModel employee)
         {
 
-            DashboardMessageViewModel message = new DashboardMessageViewModel();
+            DashboardMessageViewModel msg = new DashboardMessageViewModel();
 
             if (!ModelState.IsValid)
             {
@@ -48,17 +48,17 @@ namespace Master_Approval_System.Controllers
 
             var chkUser = UserManager.Create(user, userPWD);
 
-            //Add default User to Role Admin   
+
+            msg.State = "Error";
+            msg.Message = "Error during creation !!";
+            
             if (chkUser.Succeeded)
             {
-                message.State = "Normal";
-                message.Message = "Employee Created Successfully !!";
+                msg.State = "Normal";
+                msg.Message = "Employee Created Successfully !!";
             }
 
-            message.State = "Error";
-            message.Message = "Error during creation !!";
-
-            return RedirectToAction("Index", "Dashboard", new {info = message});
+            return RedirectToAction("redirectView", "Dashboard", new { Message = msg.Message, Status = msg.State });
 
         }
     }
