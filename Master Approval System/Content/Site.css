@@ -23,13 +23,13 @@ textarea {
     max-width: 280px;
 }
 
-.add {
+.dash_button {
     padding: 10px 15px;
     color: #fff;
     background-color: #333;
 }
 
-.add:hover {
+.dash_button:hover {
     color: #fff;
     background-color: #222;
     text-decoration: none;

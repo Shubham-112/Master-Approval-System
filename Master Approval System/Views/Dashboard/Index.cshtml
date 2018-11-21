@@ -26,9 +26,11 @@
 <div class="container" style="margin-top: 20px">
     <div class="row">
         <div class="col-sm-4">
-            @Html.ActionLink("Add Employee", "addEmployee", "Employee", null, new { @class = "add" })
+            @Html.ActionLink("Add Employee", "addEmployee", "Employee", null, new { @class = "dash_button" })
         </div>
-        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            @Html.ActionLink("Create Employee approval process", "addApprovalProcess", "Employee", null, new { @class = "dash_button" })
+        </div>
         <div class="col-sm-4"></div>
         <div class="col-sm-4"></div>
     </div>

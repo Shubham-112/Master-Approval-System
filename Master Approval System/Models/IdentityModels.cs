@@ -48,6 +48,8 @@ namespace Master_Approval_System.Models
         public DbSet<SalaryMasterRequest> SalaryMasterRequests { get; set; }
         public DbSet<SalaryProcessRequest> SalaryProcessRequests { get; set; }
         public DbSet<ProfileUpdateRequest> ProfileUpdateRequests { get; set; }
+        public DbSet<ApprovalProcess> ApprovalProcesses { get; set; }
+        public DbSet<Level> Levels { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

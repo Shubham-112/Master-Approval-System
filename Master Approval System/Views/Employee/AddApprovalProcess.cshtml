@@ -1,0 +1,57 @@
+﻿@model Master_Approval_System.ViewModels.ApprovalProcessViewModel
+@{
+    ViewBag.Title = "AddApprovalProcess";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Add Approval Process</h2>
+
+
+<button id="addLevel" class="btn btn-primary">Add Level</button>
+
+<div class="container">
+    <h2>Fill Details</h2>
+    <form action="/" method="post" id="form">
+        
+        <div class="level">
+            <h4>Level 1</h4>
+            <div class="container">
+                <div class="form-group">
+                    <label>Name 1:</label>
+                    <input type="text" name="level1-name1" value="" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Name 2:</label>
+                    <input type="text" name="level1-name2" value="" class="form-control" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+            
+    $('#addLevel').on('click', function(event){
+        $('#form').append("" +
+            "<div class='level'>"+
+            "<button id='addApprover'>Add Approver</button><br><br>"+
+            "<input type='text' placeholder='type your name'><br>"+
+            "</div>"+
+            "");
+    });
+            
+            
+    $('#form').on('click',"button#addApprover", function(event){
+        event.preventDefault();
+        parent = event.target.parentNode;
+        console.log(parent);
+        $(parent).append(""+
+            "<input type='text' placeholder='type your name'><br>"+
+            "");
+        console.log("click");
+    });
+            
+            
+</script>

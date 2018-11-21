@@ -61,5 +61,25 @@ namespace Master_Approval_System.Controllers
             return RedirectToAction("redirectView", "Dashboard", new { Message = msg.Message, Status = msg.State });
 
         }
+
+        public ActionResult AddApprovalProcess()
+        {
+            return View();
+        }
+
+        public ActionResult Test()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Test(TestViewModel T)
+        {
+            IEnumerable<int> values = T.test;
+
+            return Content(values.Count().ToString());
+        }
     }
 }
