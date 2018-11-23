@@ -11,47 +11,99 @@
 
 <div class="container">
     <h2>Fill Details</h2>
-    <form action="/" method="post" id="form">
-        
-        <div class="level">
-            <h4>Level 1</h4>
-            <div class="container">
-                <div class="form-group">
-                    <label>Name 1:</label>
-                    <input type="text" name="level1-name1" value="" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label>Name 2:</label>
-                    <input type="text" name="level1-name2" value="" class="form-control" />
-                </div>
+    @using (Html.BeginForm("AddApprovalProcess", "Employee", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", id = "form", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add Approval Process" class="btn btn-default" />
             </div>
         </div>
-    </form>
+    }
 </div>
 
 
 
+
+
+
+
+<script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+
 <script>
-            
-    $('#addLevel').on('click', function(event){
+    var level = 1;
+
+
+    $('#addLevel').on('click', function (event) {
         $('#form').append("" +
-            "<div class='level'>"+
-            "<button id='addApprover'>Add Approver</button><br><br>"+
-            "<input type='text' placeholder='type your name'><br>"+
-            "</div>"+
+            "<div class='level'>" +
+                '<input type="hidden" value="0" name="Level" id="Level">'+
+                "<h4>Level "+ level+"</h4>" +
+                "<button id='addApprover' class='btn btn-primary'>Add Approver</button><br><br>" +
+            "</div>" +
             "");
+        level++;
     });
-            
-            
-    $('#form').on('click',"button#addApprover", function(event){
+
+
+    $('#form').on('click', "button#addApprover", function (event) {
         event.preventDefault();
         parent = event.target.parentNode;
         console.log(parent);
-        $(parent).append(""+
-            "<input type='text' placeholder='type your name'><br>"+
+        value = parent.childNodes[0];
+        $(value).val(parseInt($(value).val()) + 1);
+        console.log($(value).val());
+        $(parent).append("" +
+            '<div class="form-group">' +
+                '@Html.LabelFor(m => m.Approver, new { @class = "col-md-2 control-label" })' +
+                '<div class="col-md-8">' +
+                    '@Html.TextBoxFor(m => m.Approver, new { @class = "form-control" })' +
+                '</div>' +
+                '<div class="col-md-2">' +
+                    "<button id='delApprover' class='btn btn-danger'>Delete Approver</button>" +
+                '</div>'+
+            '</div>' +
             "");
         console.log("click");
     });
+
+    $('#form').on('click',
+        "button#delApprover",
+        function(event) {
+            event.preventDefault();
+            parentDiv = event.target.parentNode.parentNode;
+            console.log(parentDiv);
+            levelF = parentDiv.parentNode;
+            value = levelF.childNodes[0];
+            $(value).val(parseInt($(value).val()) - 1);
+            $(parentDiv).empty();
+            $(parentDiv).remove();
+        });
+
+    //$('#addLevel').on('click', function(event){
+    //    $('#form').append("" +
+    //        "<div class='level'>"+
+    //        "<button id='addApprover'>Add Approver</button><br><br>"+
+    //        "<input type='text' placeholder='type your name'><br>"+
+    //        "</div>"+
+    //        "");
+    //});
+            
+            
+    //$('#form').on('click',"button#addApprover", function(event){
+    //    event.preventDefault();
+    //    parent = event.target.parentNode;
+    //    console.log(parent);
+    //    $(parent).append(""+
+    //        "<input type='text' placeholder='type your name'><br>"+
+    //        "");
+    //    console.log("click");
+    //});
             
             
 </script>

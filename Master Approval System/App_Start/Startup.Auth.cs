@@ -117,6 +117,13 @@ namespace Master_Approval_System
                 role.Name = "Employee";
                 roleManager.Create(role);
             }
+
+            if (!roleManager.RoleExists("Approver"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Approver";
+                roleManager.Create(role);
+            }
         }
     }
 }

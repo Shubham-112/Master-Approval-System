@@ -34,3 +34,9 @@ textarea {
     background-color: #222;
     text-decoration: none;
 }
+
+.level {
+    border: solid 1px #888;
+    margin: 10px;
+    padding: 20px;
+}

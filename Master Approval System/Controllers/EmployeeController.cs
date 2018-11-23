@@ -67,6 +67,22 @@ namespace Master_Approval_System.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddApprovalProcess(ApprovalProcessViewModel model)
+        {
+            if (model.Approver.Count() < 1)
+            {
+                return Content(model.Level.Count().ToString());
+            }
+            else
+            {
+                return Content(model.Level.Count().ToString() + model.Approver.Count().ToString());
+            }
+            
+        }
+        
+
         public ActionResult Test()
         {
             return View();

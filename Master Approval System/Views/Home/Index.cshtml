@@ -2,6 +2,14 @@
     ViewBag.Title = "Home Page";
 }
 
+@*@if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
+{
+    if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Take to Admin Dashboard", "Index", "Dashboard")
+    }
+}*@
+
 <div class="jumbotron" style="margin-top: 20px">
     <h1>Master Approval System</h1>
     <p class="lead">This web application aims for the purpose of Master approvals in an organization. It is a module for salary and profile approvals where there can be n approval levels and m approvers in each level as decided by the administrator of the organisation. Moreover, the approval flow of every employee can be different if required. </p>
