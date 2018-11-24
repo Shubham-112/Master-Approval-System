@@ -24,6 +24,9 @@ namespace Master_Approval_System.ViewModels
         [Display(Name = "Default Password")]
         public String Password { get; set; }
 
+        [Display(Name = "Approver: ")]
+        public Boolean isApprover { get; set; }
+
         public String Message { get; set; }
     }
 }

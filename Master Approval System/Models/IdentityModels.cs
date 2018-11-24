@@ -52,7 +52,7 @@ namespace Master_Approval_System.Models
         public DbSet<Level> Levels { get; set; }
 
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("Master Approval System", throwIfV1Schema: false)
         {
         }
 

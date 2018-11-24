@@ -2,13 +2,13 @@
     ViewBag.Title = "Home Page";
 }
 
-@*@if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
+@if (User.Identity.IsAuthenticated)
 {
-    if (User.IsInRole("Admin"))
+    if (User.IsInRole("Administrator"))
     {
-        @Html.ActionLink("Take to Admin Dashboard", "Index", "Dashboard")
+        @Html.ActionLink("Take to Admin Dashboard", "Index", "Dashboard", null, new { @class = "dash_button" })
     }
-}*@
+}
 
 <div class="jumbotron" style="margin-top: 20px">
     <h1>Master Approval System</h1>

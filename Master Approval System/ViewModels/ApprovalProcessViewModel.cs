@@ -9,10 +9,14 @@ namespace Master_Approval_System.ViewModels
 {
     public class ApprovalProcessViewModel
     {
-        [Display(Name = "Name of Approver:")]
-        public IEnumerable<int> Approver { get; set; }
+        public List<ApplicationUser> ApproverList { get; set; }
 
+        [Required]
+        [Display(Name = "Name of Approver:")]
+        public List<String> Approver { get; set; }
+
+        [Required]
         [Display(Name = "Name of Level:")]
-        public IEnumerable<int> Level { get; set; }
+        public List<int> Level { get; set; }
     }
 }

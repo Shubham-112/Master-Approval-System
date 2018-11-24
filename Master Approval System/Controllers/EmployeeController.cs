@@ -54,6 +54,14 @@ namespace Master_Approval_System.Controllers
             
             if (chkUser.Succeeded)
             {
+                if (employee.isApprover)
+                {
+                    UserManager.AddToRole(user.Id, "Approver");
+                }
+                else
+                {
+                    UserManager.AddToRole(user.Id, "Employee");
+                }
                 msg.State = "Normal";
                 msg.Message = "Employee Created Successfully !!";
             }
@@ -62,22 +70,69 @@ namespace Master_Approval_System.Controllers
 
         }
 
-        public ActionResult AddApprovalProcess()
+        public async System.Threading.Tasks.Task<ActionResult> AddApprovalProcess()
         {
-            return View();
+            ApplicationDbContext context = new ApplicationDbContext();
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            var role = await RoleManager.FindByIdAsync("3a6e2158-8b77-4ff8-9c15-66a48e00248e");
+            foreach (var user in UserManager.Users.ToList())
+            {
+                if (await UserManager.IsInRoleAsync(user.Id, role.Name))
+                {
+                    users.Add(user);
+                }
+            }
+            ApprovalProcessViewModel model = new ApprovalProcessViewModel
+            {
+                ApproverList = users
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddApprovalProcess(ApprovalProcessViewModel model)
+        public async System.Threading.Tasks.Task<ActionResult> AddApprovalProcess(ApprovalProcessViewModel approvers)
         {
-            if (model.Approver.Count() < 1)
+            if (!ModelState.IsValid)
             {
-                return Content(model.Level.Count().ToString());
+                ApplicationDbContext context = new ApplicationDbContext();
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                List<ApplicationUser> users = new List<ApplicationUser>();
+                var role = await RoleManager.FindByIdAsync("3a6e2158-8b77-4ff8-9c15-66a48e00248e");
+                foreach (var user in UserManager.Users.ToList())
+                {
+                    if (await UserManager.IsInRoleAsync(user.Id, role.Name))
+                    {
+                        users.Add(user);
+                    }
+                }
+                ApprovalProcessViewModel model = new ApprovalProcessViewModel
+                {
+                    ApproverList = users
+                };
+                return View(model);
             }
             else
             {
-                return Content(model.Level.Count().ToString() + model.Approver.Count().ToString());
+
+                List<String> Approvers = approvers.Approver;
+                List<int> Levels = approvers.Level;
+
+                foreach (var level in Levels)
+                {
+                    for (var i = 0; i < level; i++)
+                    {
+                        
+                    }
+                }
+
+                return Content(Approvers[0] + " " + Approvers[1] + " " + Levels[0] + " " + Levels[1]);
+
+
+
             }
             
         }

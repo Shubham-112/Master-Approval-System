@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
+
 <h2>Add Approval Process</h2>
 
 
@@ -14,7 +15,7 @@
     @using (Html.BeginForm("AddApprovalProcess", "Employee", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", id = "form", role = "form" }))
     {
         @Html.AntiForgeryToken()
-
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -26,14 +27,13 @@
 
 
 
+@*@Html.DropDownListFor(m => m.Approver, new SelectList(Model.ApproverList, "Id", "UserName"), "Select Approver", new { @class = "form-control" })*@
 
 
 
-
-<script
-    src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
 
 <script>
     var level = 1;
@@ -42,7 +42,7 @@
     $('#addLevel').on('click', function (event) {
         $('#form').append("" +
             "<div class='level'>" +
-                '<input type="hidden" value="0" name="Level" id="Level">'+
+                '<input type="hidden" value="0" name="Level" id="Level">' +
                 "<h4>Level "+ level+"</h4>" +
                 "<button id='addApprover' class='btn btn-primary'>Add Approver</button><br><br>" +
             "</div>" +
@@ -54,22 +54,35 @@
     $('#form').on('click', "button#addApprover", function (event) {
         event.preventDefault();
         parent = event.target.parentNode;
-        console.log(parent);
+        //console.log(parent);
         value = parent.childNodes[0];
         $(value).val(parseInt($(value).val()) + 1);
-        console.log($(value).val());
+        //console.log($(value).val());
         $(parent).append("" +
             '<div class="form-group">' +
                 '@Html.LabelFor(m => m.Approver, new { @class = "col-md-2 control-label" })' +
                 '<div class="col-md-8">' +
-                    '@Html.TextBoxFor(m => m.Approver, new { @class = "form-control" })' +
+                    '<select class="form-control Approver" id="Approver" name="Approver"></select>' +
                 '</div>' +
                 '<div class="col-md-2">' +
                     "<button id='delApprover' class='btn btn-danger'>Delete Approver</button>" +
                 '</div>'+
             '</div>' +
             "");
-        console.log("click");
+
+        child = $(parent).find('.Approver');
+
+        var approverList = '@Html.Raw(Json.Encode(Model.ApproverList))';
+        var data = $.parseJSON(approverList);
+        //formattedJson = JSON.stringify(data, null, '\t');
+
+
+        //bug: Resets the choice of approver selected by the admin on addition of a new field for approver
+
+        child.empty();
+        $.each(data, function (key, value) {
+            child.append('<option value=' + value["Id"] + '>' + value['UserName'] + '</option>');
+        });
     });
 
     $('#form').on('click',
@@ -93,8 +106,8 @@
     //        "</div>"+
     //        "");
     //});
-            
-            
+
+
     //$('#form').on('click',"button#addApprover", function(event){
     //    event.preventDefault();
     //    parent = event.target.parentNode;
@@ -104,6 +117,6 @@
     //        "");
     //    console.log("click");
     //});
-            
-            
+
+
 </script>
