@@ -6,9 +6,38 @@
 {
     if (User.IsInRole("Administrator"))
     {
-        @Html.ActionLink("Take to Admin Dashboard", "Index", "Dashboard", null, new { @class = "dash_button" })
+    <div class="row">
+        <div class="col-sm-3">
+            @Html.ActionLink("Take to Admin Dashboard", "Index", "Dashboard", null, new { @class = "dash_button" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ActionLink("Create Profile Update Request", "Index", "Dashboard", null, new { @class = "dash_button" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ActionLink("Create Salary Master Request", "Index", "Dashboard", null, new { @class = "dash_button" })
+        </div>
+        <div class="col-sm-3">
+            @Html.ActionLink("Create Salary Process Request", "Index", "Dashboard", null, new { @class = "dash_button" })
+        </div>
+    </div>
+    }else
+    {
+        <div class="row">
+            <div class="col-sm-4">
+                @Html.ActionLink("Create Profile Update Request", "Index", "Dashboard", null, new { @class = "dash_button" })
+            </div>
+            <div class="col-sm-4">
+                @Html.ActionLink("Create Salary Master Request", "Index", "Dashboard", null, new { @class = "dash_button" })
+            </div>
+            <div class="col-sm-4">
+                @Html.ActionLink("Create Salary Process Request", "Index", "Dashboard", null, new { @class = "dash_button" })
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+
     }
 }
+
 
 <div class="jumbotron" style="margin-top: 20px">
     <h1>Master Approval System</h1>

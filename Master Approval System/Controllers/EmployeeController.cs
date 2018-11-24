@@ -43,6 +43,7 @@ namespace Master_Approval_System.Controllers
             var user = new ApplicationUser();
             user.UserName = employee.Email;
             user.Email = employee.Email;
+            user.Name = employee.Name;
 
             string userPWD = employee.Password;
 
@@ -77,6 +78,7 @@ namespace Master_Approval_System.Controllers
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             List<ApplicationUser> users = new List<ApplicationUser>();
             var role = await RoleManager.FindByIdAsync("3a6e2158-8b77-4ff8-9c15-66a48e00248e");
+            List<ApplicationUser> employees = UserManager.Users.ToList();
             foreach (var user in UserManager.Users.ToList())
             {
                 if (await UserManager.IsInRoleAsync(user.Id, role.Name))
@@ -86,7 +88,8 @@ namespace Master_Approval_System.Controllers
             }
             ApprovalProcessViewModel model = new ApprovalProcessViewModel
             {
-                ApproverList = users
+                ApproverList = users,
+                Employess = employees
             };
             return View(model);
         }
@@ -95,13 +98,14 @@ namespace Master_Approval_System.Controllers
         [ValidateAntiForgeryToken]
         public async System.Threading.Tasks.Task<ActionResult> AddApprovalProcess(ApprovalProcessViewModel approvers)
         {
+            ApplicationDbContext context = new ApplicationDbContext();
             if (!ModelState.IsValid)
             {
-                ApplicationDbContext context = new ApplicationDbContext();
                 var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
                 List<ApplicationUser> users = new List<ApplicationUser>();
                 var role = await RoleManager.FindByIdAsync("3a6e2158-8b77-4ff8-9c15-66a48e00248e");
+                List<ApplicationUser> employees = UserManager.Users.ToList();
                 foreach (var user in UserManager.Users.ToList())
                 {
                     if (await UserManager.IsInRoleAsync(user.Id, role.Name))
@@ -111,7 +115,8 @@ namespace Master_Approval_System.Controllers
                 }
                 ApprovalProcessViewModel model = new ApprovalProcessViewModel
                 {
-                    ApproverList = users
+                    ApproverList = users,
+                    Employess = employees
                 };
                 return View(model);
             }
@@ -121,15 +126,52 @@ namespace Master_Approval_System.Controllers
                 List<String> Approvers = approvers.Approver;
                 List<int> Levels = approvers.Level;
 
+                string appLevels = "";
+
+                ApprovalProcess newProcess = new ApprovalProcess();
+
+                newProcess.CreatedAt = DateTime.Now;
+                newProcess.UserId = approvers.Employee;
+
+                int app = 0;
                 foreach (var level in Levels)
                 {
+                    Level newLevel = new Level();
+                    string level_approvers = "";
+
+                    newLevel.CreatedAt = DateTime.Now;
+
                     for (var i = 0; i < level; i++)
                     {
+                        if (level_approvers == "")
+                        {
+                            level_approvers += Approvers[app];
+                        }
+                        else
+                        {
+                            level_approvers += "," + Approvers[app];
+                        }
                         
+                        app++;
+                    }
+
+                    newLevel.Approvers = level_approvers;
+                    context.Levels.Add(newLevel);
+                    context.SaveChanges();
+                    if (appLevels == "")
+                    {
+                        appLevels += newLevel.Id.ToString();
+                    }
+                    else
+                    {
+                        appLevels += "," + newLevel.Id.ToString();
                     }
                 }
 
-                return Content(Approvers[0] + " " + Approvers[1] + " " + Levels[0] + " " + Levels[1]);
+                newProcess.Level = appLevels;
+                context.ApprovalProcesses.Add(newProcess);
+                context.SaveChanges();
+                return Content(Approvers[0]);
 
 
 

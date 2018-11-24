@@ -18,6 +18,11 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
+            @Html.LabelFor(m => m.Employee)
+            @Html.DropDownListFor(m => m.Employee ,new SelectList(Model.Employess, "Id", "Email"), "Select Employee", new {@class = "form-control"})
+            @Html.ValidationMessageFor(m => m.Employee)
+        </div>
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Add Approval Process" class="btn btn-default" />
             </div>
