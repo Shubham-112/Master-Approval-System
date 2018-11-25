@@ -1,0 +1,133 @@
+﻿@model Master_Approval_System.ViewModels.ProfileUpdateRequestViewModel
+@{
+    ViewBag.Title = "ProfileUpdateRequest";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Profile Update Request</h2>
+
+
+@using (Html.BeginForm("createProfileUpdateRequest", "Request", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", id = "form", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LastName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MiddleName)
+                @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MiddleName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DOB)
+                @Html.TextBoxFor(m => m.DOB, "{0:d MMM yyyy}", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DOB)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.JoiningDate)
+                @Html.TextBoxFor(m => m.JoiningDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.JoiningDate)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Client)
+                @Html.TextBoxFor(m => m.Client, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Client)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ClientSub)
+                @Html.TextBoxFor(m => m.ClientSub, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ClientSub)
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(m => m.JoiningAge)
+                @Html.TextBoxFor(m => m.JoiningAge, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.JoiningAge)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Gender)
+                @Html.TextBoxFor(m => m.Gender, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Gender)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.RetirementAge)
+                @Html.TextBoxFor(m => m.RetirementAge, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RetirementAge)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.IndustryType)
+                @Html.TextBoxFor(m => m.IndustryType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.IndustryType)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BloodGroup)
+                @Html.TextBoxFor(m => m.BloodGroup, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.BloodGroup)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AgreementType)
+                @Html.TextBoxFor(m => m.AgreementType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.AgreementType)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MiddleName)
+                @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MiddleName)
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(m => m.JobLocation)
+                @Html.TextBoxFor(m => m.JobLocation, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.JobLocation)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Division)
+                @Html.TextBoxFor(m => m.Division, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Division)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MaritalStatus)
+                <select id="MartialStatus" name="MartialStatus">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+                @Html.ValidationMessageFor(m => m.MiddleName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ContractType)
+                @Html.TextBoxFor(m => m.ContractType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ContractType)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PTState)
+                @Html.TextBoxFor(m => m.PTState, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PTState)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AssociationType)
+                @Html.TextBoxFor(m => m.AssociationType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.AssociationType)
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add Profile Update Request" class="btn btn-default" />
+        </div>
+    </div>
+}
